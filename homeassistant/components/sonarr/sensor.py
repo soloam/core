@@ -11,14 +11,7 @@ from aiopyarr.sonarr_client import SonarrClient
 
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import (
-    CONF_API_KEY,
-    CONF_HOST,
-    CONF_PORT,
-    CONF_SSL,
-    CONF_VERIFY_SSL,
-    DATA_GIGABYTES,
-)
+from homeassistant.const import DATA_GIGABYTES
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
@@ -88,7 +81,9 @@ async def async_setup_entry(
 ) -> None:
     """Set up Sonarr sensors based on a config entry."""
     sonarr: SonarrClient = hass.data[DOMAIN][entry.entry_id][DATA_SONARR]
-    host_config: PyArrHostConfiguration = hass.data[DOMAIN][entry.entry_id][DATA_HOST_CONFIG]
+    host_config: PyArrHostConfiguration = hass.data[DOMAIN][entry.entry_id][
+        DATA_HOST_CONFIG
+    ]
     system_status: SystemStatus = hass.data[DOMAIN][entry.entry_id][DATA_SYSTEM_STATUS]
     options: dict[str, Any] = dict(entry.options)
 
@@ -186,7 +181,9 @@ class SonarrSensor(SonarrEntity, SensorEntity):
                 start_date=start, end_date=end
             )
         elif key == "wanted":
-            self.data[key] = await self.sonarr.async_get_wanted(page_size=self.wanted_max_items)
+            self.data[key] = await self.sonarr.async_get_wanted(
+                page_size=self.wanted_max_items
+            )
 
     @property
     def extra_state_attributes(self) -> dict[str, str] | None:

@@ -128,7 +128,9 @@ def mock_sonarr_config_flow() -> Generator[None, MagicMock, None]:
 @pytest.fixture
 def mock_sonarr() -> Generator[None, MagicMock, None]:
     """Return a mocked Sonarr client."""
-    with patch("homeassistant.components.sonarr.SonarrClient", autospec=True) as sonarr_mock:
+    with patch(
+        "homeassistant.components.sonarr.SonarrClient", autospec=True
+    ) as sonarr_mock:
         client = sonarr_mock.return_value
         client.async_get_calendar.return_value = sonarr_calendar()
         client.async_get_commands.return_value = sonarr_commands()

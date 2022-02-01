@@ -158,7 +158,7 @@ async def test_availability(
     assert hass.states.get(UPCOMING_ENTITY_ID).state == "1"
 
     # state to unavailable
-    mock_sonarr.async_?get_calendar.side_effect = ArrException
+    mock_sonarr.async_get_calendar.side_effect = ArrException
 
     future += timedelta(minutes=1)
     with patch("homeassistant.util.dt.utcnow", return_value=future):
